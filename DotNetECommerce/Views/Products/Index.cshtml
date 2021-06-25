@@ -1,0 +1,66 @@
+﻿@model DotNetECommerce.ViewModels.CategoryProductViewModel
+
+@{
+    ViewBag.Title = "Voltran Shopping";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/product_card.css" rel="stylesheet" type="text/css" />
+<h2 style="margin: 40px 0;">Voltran Shopping</h2>
+
+<div class="row" style="margin-bottom:30px;">
+    <form method="post" action="/products">
+        <div class="col-md-9">
+            <input type="text" name="search_text" class="form-control" style="width: 100%; max-width: 100%;" placeholder="Enter some text to search">
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="form-control btn btn-info" style="width:100%;">Search</button>
+        </div>
+    </form>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <h5><strong>Show by Categories</strong></h5>
+        <ul>
+            @foreach (var category in Model.Categories)
+            {
+                <li><a href="/products?cat=@category.Id">@category.Name</a></li>
+            }
+            <li><a href="/products?cat=0">Clear filter</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+        <div class="product-container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                @foreach (var product in Model.Products)
+                {
+                    <div class="col-md-4" style="padding: 25px;">
+                        <div class="card h-200 shadow-sm">
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(product.Image)" class="card-img-top" alt="...">
+                            <div class="card-body container-padding">
+                                <div class="clearfix mb-3 row">
+                                    <div class="col-md-6 text-left">
+                                        <span class="float-left badge rounded-pill bg-primary">@product.Category.Name</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <strong>
+                                            <span class="text-success" style="font-size: 1.5em;">&#8378; @product.Price</span>
+                                        </strong>
+                                    </div>
+                                </div>
+                                <br />
+                                <h5>@product.Name</h5>
+                                <div class="text-center my-4">
+                                    <a href="products/@product.Id" class="btn btn-warning">Go Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

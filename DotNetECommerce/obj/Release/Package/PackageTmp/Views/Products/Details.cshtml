@@ -1,0 +1,48 @@
+﻿@model DotNetECommerce.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Name Details</h2>
+
+<div class="row">
+    <div class="col-md-6"><img src="data:image/jpeg;base64,@Convert.ToBase64String(@Model.Image)" height="300" /></div>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            @*            <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>*@
+
+            <dd class="text-success" style="font-size: 2em;">
+                <strong>&#8378; @Html.DisplayFor(model => model.Price)</strong>
+            </dd>
+
+            <form method="post" action="/cart/add">
+                <dt class="text-right">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="number" name="quantity" min="1" max="1000" step="1" value="1" class="form-control" style="width: 80px; display: inline-block !important;" />
+                </dt>
+                <dd><button type="submit" class="btn btn-info">Add to Cart</button></dd>
+            </form>
+        </dl>
+    </div>
+</div>
+
